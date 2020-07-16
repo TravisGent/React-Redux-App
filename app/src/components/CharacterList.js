@@ -4,16 +4,19 @@ import { fetchData } from "../actions/actions";
 
 const CharacterList = (props) => {
   useEffect(() => {
-    props.fetchMissions();
+    props.fetchData();
   }, []);
   return (
     <div>
       {props.isLoading && <p>Loading CharacterList...</p>}
-      {props.error && <p>Uh-oh, something happened... {props.error}</p>}
+      {props.error && <p className="error">Uh-oh, something happened... {props.error}</p>}
       {props.fetchedData.length > 0 && (
         <div>
           {props.fetchedData.map(data => (
-            <div></div>
+            <div className="characterContainer">
+              <img className="characterImage" src={data.image}></img>
+              <h2 className="characterName">{data.name}</h2>
+            </div>
           ))}
         </div>
       )}
@@ -26,8 +29,8 @@ const mapStateToProps = state => {
     isLoading: state.isLoading,
     fetchedData: state.fetchedData,
     error: state.error
-  }
-}
+  };
+};
 
 export default connect(
     mapStateToProps,
